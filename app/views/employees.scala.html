@@ -1,0 +1,73 @@
+@(items: List[models.Employee],categories: List[models.Category])
+@main("On Sale"){
+   
+
+
+    @* Display successful new product message from flash, if it is set *@
+	@if(flash.containsKey("success")) {
+		<div class="alert alert-success">
+			@flash.get("success")
+		</div>
+}
+    <div class="col-sm-3">
+		
+	        <ul class="list-group">
+                    <a href = "@routes.HomeController.employees(0)" class="list-group-item"><strong>Departments</strong></a>
+		        @for(c<-categories) {
+			        <a href = "@routes.HomeController.employees(c.getId())" class="list-group-item catheight">@c.getName
+                        <span class="badge">@c.getItems.size</span> 
+                    </a>
+			    }
+            </ul>
+    </div>
+
+    <div class="col-sm-9">
+        <h4 style="text-align: center;"><strong>Employees</strong></h4>
+        <table class="table table-bordered table-hover table-condensed">
+            <thead>
+        <!-- The header row-->
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Department</th>
+            
+      
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Product row(s) -->
+       
+            @* Loop for creating table rows from Employee data *@
+            @for(i<-items) {
+               <tr>
+                  <td>@i.getId</td>
+                  <td>@i.getFirstName</td>
+                  <td>@i.getLastName</td>
+                  <td>@i.getCategory.getName</td>
+                  <!-- Update button -->
+						<td>
+                            <a href="@routes.HomeController.updateItem(i.getId)">
+
+                                <button type="button" class="btn btn-success btn-xs">Edit</button>
+                                </a>
+                </td>
+                  <!-- Delete button -->
+						<td>
+							<a href="@routes.HomeController.deleteItem(i.getId)" onclick="return confirmDel();">
+                                <button type="button" class="btn btn-danger btn-xs">Delete</button>
+							</a>
+                </td>
+               </tr>
+            }
+        
+        </tbody>
+    </table>
+
+    <p>
+        <a href="@routes.HomeController.addItem()">
+            <button class="btn btn-primary">Add Employee</button>
+        </a>
+</p>
+</div>
+ }
