@@ -25,7 +25,7 @@ public class Employee extends Model {
     private Department department;
 
     @OneToOne
-    private Address address;
+    private Address add;
 
     // Default Constructor
     public Employee() {
@@ -65,11 +65,12 @@ public static final List<Employee> findAll() {
     public void setLname(String lname) {
         this.lname = lname;
     }
-     public Address getAddress(){
-        return address;
+    public Address getAdd() {
+        return add;
     }
-    public void setAddress(Address address){
-        this.address = address;
+    
+    public void setAdd (Address add) {
+        this.add = add;
     }
     
 

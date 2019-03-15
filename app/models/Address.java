@@ -10,40 +10,40 @@ import play.data.validation.*;
 @Entity
 public class Address extends Model{
     @Id
-    private Long id;
+    private Long aid;
 
     @Constraints.Required 
     private String Address;
 
     @OneToOne
-    private Employee employee;
+    private List<Employee> emp;
 
     public Address(){
     }
 
-    public Address(Long id, String Address){
-        this.id = id;
+    public Address(Long aid, String Address){
+        this.aid = aid;
         this.Address = Address;
     }
 
     public Long getAddressID(){
-        return id;
+        return aid;
     }
-    public void setAddressID(Long id){
-        this.id = id;
+    public void setAddressID(Long aid){
+        this.aid = aid;
     }
     public String getAddressName(){
         return Address;
     }
-    public void setAddressName(String Address){
+    public void setAddressName(Address add){
         this.Address = Address;
     }
 
-    public Employe getEmp() {
-        return employee;
+    public List<Employee> getEmp() {
+        return emp;
     }
     
-    public void setEmp (Employee emp) {
+    public void setEmp (List<Employee> emp) {
         this.emp = emp;
     }
 

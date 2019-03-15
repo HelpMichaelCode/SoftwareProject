@@ -4,9 +4,9 @@
 # --- !Ups
 
 create table address (
-  id                            bigint auto_increment not null,
+  aid                           bigint auto_increment not null,
   address                       varchar(255),
-  constraint pk_address primary key (id)
+  constraint pk_address primary key (aid)
 );
 
 create table department (
@@ -20,15 +20,15 @@ create table employee (
   fname                         varchar(255),
   lname                         varchar(255),
   department_id                 bigint,
-  address_id                    bigint,
-  constraint uq_employee_address_id unique (address_id),
+  add_aid                       bigint,
+  constraint uq_employee_add_aid unique (add_aid),
   constraint pk_employee primary key (id)
 );
 
 alter table employee add constraint fk_employee_department_id foreign key (department_id) references department (id) on delete restrict on update restrict;
 create index ix_employee_department_id on employee (department_id);
 
-alter table employee add constraint fk_employee_address_id foreign key (address_id) references address (id) on delete restrict on update restrict;
+alter table employee add constraint fk_employee_add_aid foreign key (add_aid) references address (aid) on delete restrict on update restrict;
 
 
 # --- !Downs
@@ -36,7 +36,7 @@ alter table employee add constraint fk_employee_address_id foreign key (address_
 alter table employee drop constraint if exists fk_employee_department_id;
 drop index if exists ix_employee_department_id;
 
-alter table employee drop constraint if exists fk_employee_address_id;
+alter table employee drop constraint if exists fk_employee_add_aid;
 
 drop table if exists address;
 
