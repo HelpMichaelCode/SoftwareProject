@@ -33,93 +33,92 @@ public class HomeController extends Controller {
      * <code>GET</code> request with a path of <code>/</code>.
      */
     public Result employees(Long cat) {
-        List<Employee> itemList = null;
-        List<Category> categoryList = Category.findAll();
-
+        List<Employee> empList = null;
+        List<Department> departmentList = Department.findAll();
+       
         if(cat ==0){
-            itemList = Employee.findAll();
+            empList = Employee.findAll();
         }else {
-            itemList = Category.find.ref(cat).getItems();
+            empList = Department.find.ref(cat).getEmp();
+           
         }
-        return ok(employees.render(itemList, categoryList));
+        return ok(employees.render(empList, departmentList));
 
      }
 
-    public Result index() {
-        return ok(index.render());
+    public Result home() {
+        return ok(home.render());
     }
 
     public Result about() {
         return ok(about.render());
     }
 
-    public Result addItem() {
+    public Result addEmp() {
         Form<Employee> employeeForm = formFactory.form(Employee.class);
-        return ok(addItem.render(employeeForm));
+        return ok(addEmp.render(employeeForm));
 }
 
-public Result addItemSubmit() {
+public Result addEmpSubmit() {
    
     Form<Employee> employeeForm = formFactory.form(Employee.class).bindFromRequest();
     // We check for errors (based on constraints set in Employee class)
     if (employeeForm.hasErrors()) {
         // If the form data have errors, we call the method badRequest(), requesting Play 
-        // Framework to send an error response to the user and display the additem page again. 
+        // Framework to send an error response to the user and display the addEmp page again. 
         // As we are passing in employeeForm, the form will be populated with the data that the 
         // user has already entered, saving them from having to enter it all over again.
-        return badRequest(addItem.render(employeeForm));
+        return badRequest(addEmp.render(employeeForm));
     } else {
         // If no errors are found in the form data, we extract the data from the form.
         // Form objects have handy utility methods, such as the get() method we are using 
         // here to extract the data into an Employee object. This is possible because
         // we defined the form in terms of the model class Employee.
-        Employee newItem = employeeForm.get();
+        Employee newEmp = employeeForm.get();
 
-        if(newItem.getId()==null){
-        newItem.save();
+        if(newEmp.getId()==null){
+            newEmp.save();
         }else{
-            newItem.update();
+            newEmp.update();
         }
         // We use the flash scope to specify that we want a success message superimposed on
         // the next displayed page. The flash scope uses cookies, which we can read and set
         // using the flash() function of the Play Framework. The flash scope cookies last
         // for a single request (unlike session cookies, which we will use for log-in in a
         // future lab). So, add a success message to the flash scope.
-        flash("success", "" + newItem.getFirstName() + " "+ newItem.getLastName() + " was added/updated.");
+        flash("success", "" + newEmp.getFname() + " " + newEmp.getLname() + " was added/updated.");
         // Having specified we want a message at the top, we can redirect to the onsale page,
         // which will have to be modified to read the flash scope and display it.
         return redirect(controllers.routes.HomeController.employees(0));
     }
 }
 
-public Result deleteItem(Long id) {
+public Result deleteEmp(Long id) {
 
-    // The following line of code finds the item object by id, then calls the delete() method
-    // on it to have it removed from the database.
+    
     Employee.find.ref(id).delete();
 
-    // Now write to the flash scope, as we did for the successful item creation.
+   
     flash("success", "Employee has been deleted.");
     // And redirect to the onsale page
     return redirect(controllers.routes.HomeController.employees(0));
 }
 
-public Result updateItem(Long id) {
+public Result updateEmp(Long id) {
     Employee i;
     Form<Employee> employeeForm;
 
     try {
-        // Find the item by id
+       
         i = Employee.find.byId(id);
 
-        // Populate the form object with data from the item found in the database
+        
         employeeForm = formFactory.form(Employee.class).fill(i);
     } catch (Exception ex) {
         return badRequest("error");
     }
 
-    // Display the "add item" page, to allow the user to update the item
-    return ok(addItem.render(employeeForm));
+    return ok(addEmp.render(employeeForm));
 }
 
 }

@@ -1,4 +1,4 @@
-@(itemForm: Form[models.Employee])
+@(employeeForm: Form[models.Employee])
 
 @import helper._
 
@@ -8,32 +8,34 @@
     <!-- Use a views.html.helpers package method to create the form (instead of html)-->
     <!-- Note the arguments that are being passed to the scala function form (they are
          essentially instructions for constructing an HTML form element)-->
-    @form(action=routes.HomeController.addItemSubmit(), 'class -> "form-horizontal", 'role -> "form") {
+    @form(action=routes.HomeController.addEmpSubmit(), 'class -> "form-horizontal", 'role -> "form") {
         @* CSRF attack prevention *@
         @* This token, sent by the controller, will be used to authenticate the form submission *@
         @CSRF.formField
 
         <!-- Use helper methods to add fields to the form -->
-        <!-- Note that the form fields are related to the fields of the itemForm object -->
+        <!-- Note that the form fields are related to the fields of the employeeForm object -->
         <!-- Note the arguments that are being passed to the scala function inputText (they are 
              essentially instructions for constructing an HTML input element)-->
         <!-- Note the @select function's argument options. This needs to be a map of ids-to-names
-             and this is provided by the method Category.options(), which we added to the Category
+             and this is provided by the method Department.options(), which we added to the Department
              class in the previous step. -->
-            @inputText(itemForm("first name"), '_label -> "First Name", 'class -> "form-control")
-            @inputText(itemForm("last name"), '_label -> "Last Name", 'class -> "form-control")
+            @inputText(employeeForm("fname"), '_label -> "First Name", 'class -> "form-control")
+            @inputText(employeeForm("lname"), '_label -> "Last Name", 'class -> "form-control")
+            @inputText(employeeForm("address.id"), '_label -> "Address", 'class -> "form-control")
+            
             @select(
-                itemForm("category.id"),
-                options(Category.options),
-                '_label -> "Category", '_default -> "-- Choose a department --", 
+                employeeForm("department.id"),
+                options(Department.options),
+                '_label -> "Department", '_default -> "-- Choose a department --", 
                 '_showConstraints -> false, 'class -> "form-control"
             )
             
-            @inputText(itemForm("id"), '_label -> "", 'hidden -> "hidden")
+            @inputText(employeeForm("id"), '_label -> "", 'hidden -> "hidden")
             
             <!-- We use the bootstrap actions class for the buttons at the bottom:
                 1. The submit button for the form
-                2. A button that allows the user to cancel without adding an item
+                2. A button that allows the user to cancel without adding an emp
             -->
             <div class="actions">
                 <input type="submit" value="Add Employee" class="btn btn-primary">

@@ -11,7 +11,10 @@
 	    .sidecol h2 { font-weight: bold; }
 	    .midcol h1 { text-align: center; font-weight: bold; }
 	    .midcol h3 { text-align: center; color: steelblue; }
-	    .redtext { color: red; }
+		.redtext { color: red; }
+		body{
+			background-color: #d9ad7c;
+		}
 	</style>
 	<title>OFM @pagename</title>
     </head>
@@ -22,7 +25,7 @@
 		    <a class="navbar-brand" href="#">WebSiteName</a>
 		</div>
 		<ul class="nav navbar-nav">
-            <li @if(pagename == "Home") {class="active"}><a href="@routes.HomeController.index()">Home</a></li>
+            <li @if(pagename == "Home") {class="active"}><a href="@routes.HomeController.home()">Home</a></li>
 		    <li @if(pagename == "Employees") {class="active"}><a href="@routes.HomeController.employees()">Employees</a></li>
 		    <li @if(pagename == "About") {class="active"}><a href="@routes.HomeController.about()">About us</a></li>
 		</ul>
@@ -43,13 +46,7 @@
 			@content
 		    </div>
 		</div>
-		<div class="col-sm-2">
-		    <div class="well sidecol">
-			<h2>Events</h2>
-			<h3>The 153rd Meet for Real event</h3>
-			<p>The popular <span class="redtext">Meet for Real</span> event takes place this Sunday at the Square Park, from 7am until 1pm. It will yet again give flea-market enthusiasts a chance to engage in a bit of live bartering and banter with their fellow sitesters.</p>
-		    </div>
-		</div>
+		
 	    </div>
 	    <div class="row">
 		<div class="col-sm-12">

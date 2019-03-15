@@ -15,14 +15,17 @@ public class Employee extends Model {
 
     @Constraints.Required
     private String fname;
-
+    
     @Constraints.Required
     private String lname;
     
     
 
     @ManyToOne
-    private Category category;
+    private Department department;
+
+    @OneToOne
+    private Address address;
 
     // Default Constructor
     public Employee() {
@@ -33,6 +36,7 @@ public class Employee extends Model {
         this.id = id;
         this.fname = fname;
         this.lname = lname;
+       
  
     }
 
@@ -49,24 +53,30 @@ public static final List<Employee> findAll() {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getFirstName() {
+    public String getFname() {
         return this.fname;
     }
-    public void setFirstName(String fname) {
+    public void setFname(String fname) {
         this.fname = fname;
     }
-    public String getLastName() {
+    public String getLname() {
         return this.lname;
     }
-    public void setLastName(String lname) {
+    public void setLname(String lname) {
         this.lname = lname;
+    }
+     public Address getAddress(){
+        return address;
+    }
+    public void setAddress(Address address){
+        this.address = address;
     }
     
 
-public Category getCategory() {
-    return category;
+public Department getDepartment() {
+    return department;
 }
-public void setCategory(Category category) {
-    this.category = category;
+public void setDepartment(Department department) {
+    this.department = department;
 }
 }

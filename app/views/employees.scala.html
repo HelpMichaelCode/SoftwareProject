@@ -1,6 +1,5 @@
-@(items: List[models.Employee],categories: List[models.Category])
-@main("On Sale"){
-   
+@(employees: List[models.Employee],categories: List[models.Department])
+@main("Employee"){
 
 
     @* Display successful new product message from flash, if it is set *@
@@ -15,7 +14,7 @@
                     <a href = "@routes.HomeController.employees(0)" class="list-group-item"><strong>Departments</strong></a>
 		        @for(c<-categories) {
 			        <a href = "@routes.HomeController.employees(c.getId())" class="list-group-item catheight">@c.getName
-                        <span class="badge">@c.getItems.size</span> 
+                        <span class="badge">@c.getEmp.size</span> 
                     </a>
 			    }
             </ul>
@@ -31,30 +30,32 @@
             <th>First Name</th>
             <th>Last Name</th>
             <th>Department</th>
+            <th>Address</th>
             
       
         </tr>
         </thead>
         <tbody>
-        <!-- Product row(s) -->
+ 
        
             @* Loop for creating table rows from Employee data *@
-            @for(i<-items) {
+            @for(i<-employees) {
                <tr>
                   <td>@i.getId</td>
-                  <td>@i.getFirstName</td>
-                  <td>@i.getLastName</td>
-                  <td>@i.getCategory.getName</td>
-                  <!-- Update button -->
+                  <td>@i.getFname</td>
+                  <td>@i.getLname</td>
+                  <td>@i.getDepartment.getName</td>
+                  <td>@i.getAddress.getAddressName</td>
+                 
 						<td>
-                            <a href="@routes.HomeController.updateItem(i.getId)">
+                            <a href="@routes.HomeController.updateEmp(i.getId)">
 
                                 <button type="button" class="btn btn-success btn-xs">Edit</button>
                                 </a>
                 </td>
                   <!-- Delete button -->
 						<td>
-							<a href="@routes.HomeController.deleteItem(i.getId)" onclick="return confirmDel();">
+							<a href="@routes.HomeController.deleteEmp(i.getId)" onclick="return confirmDel();">
                                 <button type="button" class="btn btn-danger btn-xs">Delete</button>
 							</a>
                 </td>
@@ -65,7 +66,7 @@
     </table>
 
     <p>
-        <a href="@routes.HomeController.addItem()">
+        <a href="@routes.HomeController.addEmp()">
             <button class="btn btn-primary">Add Employee</button>
         </a>
 </p>
